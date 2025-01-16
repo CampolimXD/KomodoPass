@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KomodoPass.MainPage">
+
+    <FlexLayout Direction="Column">
+        <VerticalStackLayout Padding="10" FlexLayout.Basis="400" BackgroundColor="Beige">
+            <Entry x:Name="nameEntryField" Placeholder="title" />
+            <Entry x:Name="emailEntryField" Placeholder="Senha" />
+            <Entry x:Name="mobileEntryField" Placeholder="email" />
+            <Entry x:Name="emailEntryField" Placeholder="user" />
+            <Entry x:Name="mobileEntryField" Placeholder="Notas" />
+            <Entry x:Name="emailEntryField" Placeholder="website" />
+            <Button x:Name="saveButton" Text="Save" Clicked="saveButton_Clicked" />
+        </VerticalStackLayout>
+        <ListView x:Name="listView" FlexLayout.Grow="1" HasUnevenRows="True" ItemTapped="ListView_ItemTapped">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <VerticalStackLayout Padding="5">
+                            <Label Text="{Binding CustomerName}" FontSize="17" FontAttributes="Bold" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Text="{Binding Email}" />
+                                <Label Grid.Column="2" Text="{Binding Mobile}" FontAttributes="Bold" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </FlexLayout>
+
+
+</ContentPage>
