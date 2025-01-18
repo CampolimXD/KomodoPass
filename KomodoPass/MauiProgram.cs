@@ -15,6 +15,9 @@ namespace KomodoPass
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+
+            builder.Services.AddSingleton<LocalDB>();
+
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif

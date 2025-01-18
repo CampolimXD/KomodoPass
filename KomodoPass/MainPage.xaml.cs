@@ -2,24 +2,32 @@
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
 
-        public MainPage()
+        private readonly LocalDB _dbService;
+        private int _editPasswordId;
+
+        public MainPage(LocalDB dbService)
         {
             InitializeComponent();
+            _dbService = dbService;
+            Task.Run(async () => ListView.ItemsSource = await _dbService.GetKomodoPasswords());
         }
-
-        private void OnCounterClicked(object sender, EventArgs e)
+        private async void saveButton_clicked(object sender, EventArgs e) 
         {
-            count++;
+            if (_editPasswordId == 0){
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+                await _dbService
+            }
+            else { 
+            
+            }
         }
+        private void listView_clicked(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 
 }
