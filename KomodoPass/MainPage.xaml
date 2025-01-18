@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KomodoPass.MainPage">
 
+
     <FlexLayout Direction="Column">
         <VerticalStackLayout Padding="10" FlexLayout.Basis="400" BackgroundColor="Beige">
             <Entry x:Name="nameEntryField" Placeholder="title" />
@@ -34,6 +35,7 @@
             </ListView.ItemTemplate>
         </ListView>
     </FlexLayout>
+
 
 
 </ContentPage>

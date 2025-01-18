@@ -2,6 +2,7 @@
 {
     public partial class MainPage : ContentPage
     {
+
         private readonly LocalDB _dbService;
         private int _editPasswordId;
 
@@ -25,6 +26,7 @@
         {
 
         }
+
 
     }
 
