@@ -5,21 +5,21 @@
 
 
     <FlexLayout Direction="Column">
-        <VerticalStackLayout Padding="10" FlexLayout.Basis="400" BackgroundColor="Beige">
-            <Entry x:Name="nameEntryField" Placeholder="title" />
-            <Entry x:Name="emailEntryField" Placeholder="Senha" />
-            <Entry x:Name="mobileEntryField" Placeholder="email" />
-            <Entry x:Name="emailEntryField" Placeholder="user" />
-            <Entry x:Name="mobileEntryField" Placeholder="Notas" />
-            <Entry x:Name="emailEntryField" Placeholder="website" />
-            <Button x:Name="saveButton" Text="Save" Clicked="saveButton_Clicked" />
+        <VerticalStackLayout Padding="10" FlexLayout.Basis="400" BackgroundColor="Black">
+            <Entry x:Name="NameEntryField" Placeholder="title" />
+            <Entry x:Name="EmailEntryField" Placeholder="email" />
+            <Entry x:Name="UserEntryField" Placeholder="user" />
+            <Entry x:Name="SenhaEntryField" Placeholder="Senha" IsPassword="True" />
+            <Entry x:Name="NotasEntryField" Placeholder="Notas" />
+            <Entry x:Name="WebsiteEntryField" Placeholder="website" />
+            <Button x:Name="Salvar" Text="Salvar" Clicked="Salvar_Clicked" />
         </VerticalStackLayout>
         <ListView x:Name="listView" FlexLayout.Grow="1" HasUnevenRows="True" ItemTapped="ListView_ItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <VerticalStackLayout Padding="5">
-                            <Label Text="{Binding CustomerName}" FontSize="17" FontAttributes="Bold" />
+                            <Label Text="{Binding Title}" FontSize="17" FontAttributes="Bold" />
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -27,7 +27,7 @@
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0" Text="{Binding Email}" />
-                                <Label Grid.Column="2" Text="{Binding Mobile}" FontAttributes="Bold" />
+                                <Label Grid.Column="2" Text="{Binding Password}" FontAttributes="Bold" />
                             </Grid>
                         </VerticalStackLayout>
                     </ViewCell>
