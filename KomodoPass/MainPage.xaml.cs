@@ -12,8 +12,7 @@
             _dbService = dbService;
 
              Task.Run(async () => listView.ItemsSource = await _dbService.GetKomodoPasswords());
-        }
-      
+        }      
         private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var password = (KomodoPassword)e.Item;
@@ -84,6 +83,23 @@
             // dar um refresh na lista
             listView.ItemsSource = await _dbService.GetKomodoPasswords();
         }
+
+        private async void Busca_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string query = e.NewTextValue;
+
+
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                listView.ItemsSource = await _dbService.GetKomodoPasswords();
+            }
+            else
+            {
+                var results = await _dbService.SearchPasswords(query);
+                listView.ItemsSource = results;
+            }
+        }
+
     }
 
 }

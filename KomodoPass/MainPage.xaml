@@ -14,6 +14,8 @@
             <Entry x:Name="WebsiteEntryField" Placeholder="website" />
             <Button x:Name="Salvar" Text="Salvar" Clicked="Salvar_Clicked" />
         </VerticalStackLayout>
+        <SearchBar x:Name="Busca" Placeholder="Busca" TextChanged="Busca_TextChanged">
+        </SearchBar>
         <ListView x:Name="listView" FlexLayout.Grow="1" HasUnevenRows="True" ItemTapped="ListView_ItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate>
