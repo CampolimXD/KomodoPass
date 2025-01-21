@@ -2,7 +2,7 @@
 {
     public partial class MainPage : ContentPage
     {
-
+        
         private readonly LocalDB _dbService;
         private int _editPasswordId;
 
@@ -11,7 +11,7 @@
             InitializeComponent();
             _dbService = dbService;
 
-             Task.Run(async () => listView.ItemsSource = await _dbService.GetKomodoPasswords());
+             Task.Run(async () => listView.ItemsSource = await _dbService.GetKomodoPasswords());             
         }      
         private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
@@ -35,14 +35,12 @@
                     listView.ItemsSource = await _dbService.GetKomodoPasswords();
                     break;
             }
-
         }
 
         private async void Salvar_Clicked(object sender, EventArgs e)
         {
             if (_editPasswordId == 0)
             {
-
                 await _dbService.Create(new KomodoPassword
                 {
                     Title = NameEntryField.Text,
@@ -57,7 +55,6 @@
             }
             else
             {
-
                 await _dbService.Update(new KomodoPassword
                 {
                     Id = _editPasswordId,
@@ -98,8 +95,43 @@
                 var results = await _dbService.SearchPasswords(query);
                 listView.ItemsSource = results;
             }
+        }        
+        // alterar para que esse botao vire um botao que mande o usuario para a main page com as senhas !
+        private async void Login_Clicked(object sender, EventArgs e)
+        {
+
+                var password = SenhaLogin.Text;
+                var salt = _dbService.CreateSalt();
+                string hash = _dbService.HashPassword(password, salt);   
+                byte[]hashh = Convert.FromBase64String(hash);
+                await _dbService.UpdateMaster(new MasterPassword
+                {                    
+                    Username = UserLogin.Text,
+                    PasswordHash = hashh,
+                    Salt = salt,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                });
+                      
+            // depois de incluir ou editar uma senha, reseta o texto 
+            UserLogin.Text= string.Empty;
+            SenhaLogin.Text  = string.Empty;           
         }
-
+        // temporario 
+        private async void criarLogin_Clicked(object sender, EventArgs e)
+        {
+            var password = SenhaLogin.Text;
+            var salt = _dbService.CreateSalt();
+            string hash = _dbService.HashPassword(password, salt);
+            byte[] hashh = Convert.FromBase64String(hash);
+            await _dbService.CreateMaster(new MasterPassword
+            {
+                Username = UserLogin.Text,
+                PasswordHash = hashh,
+                Salt = salt,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+            });
+        }       
     }
-
 }
