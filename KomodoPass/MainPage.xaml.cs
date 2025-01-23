@@ -1,4 +1,6 @@
-﻿namespace KomodoPass
+﻿using System.Text;
+
+namespace KomodoPass
 {
     public partial class MainPage : ContentPage
     {
@@ -16,6 +18,8 @@
         private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var password = (KomodoPassword)e.Item;
+            var aesKey = await _dbService.GetOrCreateKeyAsync();
+            var decryptedPassword = _dbService.Decrypt(Encoding.UTF8.GetString(password.Password), aesKey);        
             var action = await DisplayActionSheet("action", "cancel", null, "edit", "delete");
 
             switch (action)
@@ -23,7 +27,9 @@
                 case "edit":
                     _editPasswordId = password.Id;
                     NameEntryField.Text = password.Title;
-                    SenhaEntryField.Text = password.Password;
+                    // Mostra a senha criptografada
+                    // SenhaEntryField.Text = Encoding.UTF8.GetString(password.Password);
+                    SenhaEntryField.Text = decryptedPassword;
                     EmailEntryField.Text = password.Email;
                     UserEntryField.Text = password.Username;
                     NotasEntryField.Text = password.Notes;
@@ -41,10 +47,14 @@
         {
             if (_editPasswordId == 0)
             {
+                var aesKey = await _dbService.GetOrCreateKeyAsync();
+                var password = SenhaEntryField.Text;               
+                var Password = _dbService.Encrypt(password, aesKey);
                 await _dbService.Create(new KomodoPassword
                 {
+
                     Title = NameEntryField.Text,
-                    Password = SenhaEntryField.Text,
+                    Password = Encoding.UTF8.GetBytes(Password),                   
                     Email = EmailEntryField.Text,
                     Username = UserEntryField.Text,
                     Notes = NotasEntryField.Text,
@@ -55,11 +65,14 @@
             }
             else
             {
+                var aesKey = await _dbService.GetOrCreateKeyAsync();
+                var password = SenhaEntryField.Text;
+                var Password = _dbService.Encrypt(password, aesKey);
                 await _dbService.Update(new KomodoPassword
                 {
                     Id = _editPasswordId,
                     Title = NameEntryField.Text,
-                    Password = SenhaEntryField.Text,
+                    Password = Encoding.UTF8.GetBytes(Password),
                     Email = EmailEntryField.Text,
                     Username = UserEntryField.Text,
                     Notes = NotasEntryField.Text,

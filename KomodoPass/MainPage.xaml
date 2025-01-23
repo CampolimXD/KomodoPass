@@ -12,7 +12,7 @@
             <Entry Placeholder="Senha" x:Name="SenhaLogin" PlaceholderColor="White"  IsPassword="True"/>
             <Button x:Name="criar" Text="criarLogin" Clicked="criarLogin_Clicked" Background="IndianRed" />
             <Button x:Name="Login" Text="Login" Clicked="Login_Clicked" Background="IndianRed" />
-
+            
 
         </StackLayout>
 
@@ -20,7 +20,7 @@
             <Entry x:Name="NameEntryField" Placeholder="title" />
             <Entry x:Name="EmailEntryField" Placeholder="email" />
             <Entry x:Name="UserEntryField" Placeholder="user" />
-            <Entry x:Name="SenhaEntryField" Placeholder="Senha" IsPassword="True" />
+            <Entry x:Name="SenhaEntryField" Placeholder="Senha" IsPassword="False" />
             <Entry x:Name="NotasEntryField" Placeholder="Notas" />
             <Entry x:Name="WebsiteEntryField" Placeholder="website" />
             <Button x:Name="Salvar" Text="Salvar" Clicked="Salvar_Clicked" />
