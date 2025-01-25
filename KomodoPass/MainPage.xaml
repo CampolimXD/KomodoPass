@@ -4,18 +4,8 @@
              x:Class="KomodoPass.MainPage">
 
 
-    
+
     <FlexLayout Direction="Column">
-
-       <StackLayout BackgroundColor="IndianRed">
-            <Entry Placeholder="Username" x:Name="UserLogin" PlaceholderColor="White" />
-            <Entry Placeholder="Senha" x:Name="SenhaLogin" PlaceholderColor="White"  IsPassword="True"/>
-            <Button x:Name="criar" Text="criarLogin" Clicked="criarLogin_Clicked" Background="IndianRed" />
-            <Button x:Name="Login" Text="Login" Clicked="Login_Clicked" Background="IndianRed" />
-            
-
-        </StackLayout>
-
         <VerticalStackLayout Padding="10" FlexLayout.Basis="400" BackgroundColor="Black">
             <Entry x:Name="NameEntryField" Placeholder="title" />
             <Entry x:Name="EmailEntryField" Placeholder="email" />

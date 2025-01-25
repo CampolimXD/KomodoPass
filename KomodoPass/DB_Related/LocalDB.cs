@@ -33,15 +33,12 @@ namespace KomodoPass
             _conn.CreateTableAsync<KomodoPassword>();
             _conn.CreateTableAsync<MasterPassword>();      
         }
-        // SALT & PEPPER & AesKey
-
+        // SALT
         public byte[] CreateSalt()
         {
             return RandomNumberGenerator.GetBytes(16);
         }
-        string pepper = "Peeper_K0m0d0P455";
-        
-        // passar funçao quando for criptografar e descriptografar as senhas
+        // passar funçao da chave quando for criptografar e descriptografar as senhas
         public async Task<byte[]> GetOrCreateKeyAsync()
         {
             const string KeyName = "AESKey";
@@ -57,15 +54,6 @@ namespace KomodoPass
 
             return aesKey;
         }
-
-
-        // Hash vars
-        private const int _Memory_size = 65536;
-        private const int _Degree_of_parallelism = 4;
-        private const int _Iterations = 4;
-        private const int _Hash_size = 32;
-
-
         // Relacionado ao CRUD das senhas         
         public string Encrypt(string password, byte[] aesKey)
         {
@@ -89,9 +77,6 @@ namespace KomodoPass
             // Retorna os dados criptografados (IV + dados)
             return Convert.ToBase64String(msEncrypt.ToArray());
         }
-
-
-
         public string Decrypt(string cipherText, byte[] aesKey)
         {
             byte[] combinedbytes = Convert.FromBase64String(cipherText);
@@ -117,30 +102,28 @@ namespace KomodoPass
 
             return srDecrypt.ReadToEnd();
         }
-
-
         public async Task<List<KomodoPassword>> GetKomodoPasswords()
-       {
+        {
            return await _conn.Table<KomodoPassword>().ToListAsync();
-       }
-       public async Task<KomodoPassword> GetById(int id)
-       {
+        }
+        public async Task<KomodoPassword> GetById(int id)
+        {
            return await _conn.Table<KomodoPassword>().Where(x => x.Id == id).FirstOrDefaultAsync();
-       }
-       public async Task Create(KomodoPassword password)
-       {
+        }
+        public async Task Create(KomodoPassword password)
+        {
            await _conn.InsertAsync(password);
-       }
-       public async Task Update(KomodoPassword password)
-       {
+        }
+        public async Task Update(KomodoPassword password)
+        {
            await _conn.UpdateAsync(password);
-       }
-       public async Task Delete(KomodoPassword password)
-       {
+        }
+        public async Task Delete(KomodoPassword password)
+        {
            await _conn.DeleteAsync(password);
-       }
-       public async Task<List<KomodoPassword>> SearchPasswords(string query)
-       {
+        }
+        public async Task<List<KomodoPassword>> SearchPasswords(string query)
+        {
            string sql = @"
            SELECT * FROM KomodoPasswords 
            WHERE Title LIKE '%' || @q || '%' 
@@ -149,44 +132,75 @@ namespace KomodoPass
            OR Website LIKE '%' || @q || '%';
            ";
            return await _conn.QueryAsync<KomodoPassword>(sql, query, query, query, query);            
-       }
-
-
-
-
-
-
-        //
+        }       
         //Relacionado a senha mestra
-            public string HashPassword(string Password, byte[] salt)
+        // funçao pra que exista apenas um usuario cadastrado 
+        public async Task<MasterPassword?> GetFirstUser()
+        {
+            return await _conn.Table<MasterPassword>().OrderBy(x => x.Id).FirstOrDefaultAsync();
+        }
+        // Hash vars 
+        private const int _Memory_size = 65536;
+        private const int _Degree_of_parallelism = 4;
+        private const int _Iterations = 4;
+        private const int _Hash_size = 32;
+        // Pepper
+        string pepper = "Peeper_K0m0d0P455";
+        public string HashPassword(string Password, byte[] salt)
+        {
+            String PasswordWithPeeper = Password + pepper;
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(PasswordWithPeeper);
+
+            using var argon2 = new Argon2id(passwordBytes)
             {
-                String PasswordWithPeeper = Password + pepper;
-                byte[] passwordBytes = Encoding.UTF8.GetBytes(PasswordWithPeeper);
-
-
-                using var argon2 = new Argon2id(passwordBytes)
-                {
-                    Salt = salt,
-                    DegreeOfParallelism = _Degree_of_parallelism,
-                    Iterations = _Iterations,
-                    MemorySize = _Memory_size,
-
-                };
-                byte[] hash = argon2.GetBytes(_Hash_size);
-                return Convert.ToBase64String(hash);
+                Salt = salt,
+                DegreeOfParallelism = _Degree_of_parallelism,
+                Iterations = _Iterations,
+                MemorySize = _Memory_size,
+            };
+            byte[] hash = argon2.GetBytes(_Hash_size);
+            return Convert.ToBase64String(hash);
+        }                   
+        public async Task<bool> PreUpdateMaster(string username, string password)
+        {
+            var onlyUser = await GetFirstUser();
+            var user = await _conn.Table<MasterPassword>().Where(x => x.Username == username).FirstOrDefaultAsync();
+            string hashedPassword = HashPassword(password, onlyUser.Salt);
+            byte[] Hash = Encoding.UTF8.GetBytes(hashedPassword);
+        if (onlyUser.Username == username|| onlyUser.PasswordHash == Hash)
+        {
+            return true;
+        }           
+            return false;              
+        }
+        public async Task CreateMaster(MasterPassword password)
+        {
+            await _conn.InsertAsync(password);
+        }
+        public async Task UpdateMaster(MasterPassword password)
+        {
+            await _conn.UpdateAsync(password);
+        }
+        // Login
+        public async Task<bool> LoginProcess(string username, string password)
+        {
+            var onlyUser = await GetFirstUser();
+            var user = await _conn.Table<MasterPassword>().Where(x => x.Username == username).FirstOrDefaultAsync();
+            // não permite login de usuarios que nao sejam o primeiro usuario cadastrado ou com credenciais erradas
+            if (onlyUser == null)
+            {   
+                return false;
             }
-            // retirar do codigo/ o sistema de criação de user vira
-            // com um user root definido que depois sera atualizado, para evitar que
-            // outros users sejam criardos
-            public async Task CreateMaster(MasterPassword password)
-            {               
-                await _conn.InsertAsync(password);
+            else if(onlyUser.Username != username) 
+            {                
+                return false;
             }
-            public async Task UpdateMaster(MasterPassword password)
+            else
             {
-                await _conn.UpdateAsync(password);
+                string hashedPassword = HashPassword(password, user.Salt);
+                return hashedPassword == Convert.ToBase64String(user.PasswordHash);
             }
-        //
+        }       
     }
 }
 

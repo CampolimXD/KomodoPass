@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KomodoPass.Views.LoginPage"
+             Title="LoginPage">
+    
+    <StackLayout BackgroundColor="IndianRed">
+        <Entry Placeholder="Username" x:Name="UserLogin" PlaceholderColor="White" />
+        <Entry Placeholder="Senha" x:Name="SenhaLogin" PlaceholderColor="White"  IsPassword="True"/>
+        <Entry Placeholder="Nova Senha" x:Name="NovaSenhaLogin" PlaceholderColor="White"  IsPassword="True"/>
+        <Button x:Name="criar" Text="criarLogin" Clicked="criar_Clicked" Background="IndianRed" />
+        <Button x:Name="Login" Text="Login" Clicked="Login_Clicked" Background="IndianRed" />
+        <Button x:Name="Update" Text="update" Clicked="Update_Clicked" Background="IndianRed" />
+
+
+    </StackLayout>
+</ContentPage>

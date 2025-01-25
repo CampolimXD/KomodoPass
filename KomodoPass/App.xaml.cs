@@ -1,4 +1,6 @@
-﻿namespace KomodoPass
+﻿using KomodoPass.Views;
+
+namespace KomodoPass
 {
     public partial class App : Application
     {
@@ -9,7 +11,8 @@
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell());
+            var dbService = new LocalDB();
+            return new Window(new LoginPage(dbService));
         }
     }
 }
