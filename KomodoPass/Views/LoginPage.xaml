@@ -4,12 +4,39 @@
              x:Class="KomodoPass.Views.LoginPage"
              Title="LoginPage">
 
-    <StackLayout BackgroundColor="#IndianRed">
-        <Entry Placeholder="Username" x:Name="UserLogin" PlaceholderColor="White" />
-        <Entry Placeholder="Senha" x:Name="SenhaLogin" PlaceholderColor="White"  IsPassword="True"/>
-        <Entry Placeholder="Nova Senha" x:Name="NovaSenhaLogin" PlaceholderColor="White"  IsPassword="True"/>
-        <Button x:Name="criar" Text="criarLogin" Clicked="criar_Clicked" Background="IndianRed" />
-        <Button x:Name="Login" Text="Login" Clicked="Login_Clicked" Background="IndianRed" />
-        <Button x:Name="Update" Text="update" Clicked="Update_Clicked" Background="IndianRed" />
+   
+
+    <StackLayout BackgroundColor="#282d34" Padding="20" Spacing="20">
+        <Label Text="Komodo Pass" FontSize="96" TextColor="White" HorizontalOptions="Center" FontFamily="Audiowide" />
+        <!-- aumentar o tamhanho quando tirar os campos adicionais -->
+        <Image Source="dotnet_bot.png" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" /> 
+ 
+        <Border StrokeShape="RoundRectangle 90,90,90,90" BackgroundColor="Transparent"   HeightRequest="45" WidthRequest="302" >
+            <Entry Placeholder="Username" x:Name="UserLogin" PlaceholderColor="White" BackgroundColor="Transparent" TextColor="White" HeightRequest="40" WidthRequest="300"/>
+        </Border>
+
+        <Border StrokeShape="RoundRectangle 90,90,90,90" BackgroundColor="Transparent" HeightRequest="45" WidthRequest="302">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Entry x:Name="SenhaLogin" IsPassword="True" Placeholder="Password" PlaceholderColor="White" BackgroundColor="Transparent" TextColor="White" HeightRequest="40" Grid.Column="0" />
+                <ImageButton Source="eyeoutline.png" x:Name="ShowPassword" BackgroundColor="Transparent" Grid.Column="1" Clicked="ShowPassword_Clicked" Aspect="Center" />
+            </Grid>
+        </Border>
+
+
+        <Button x:Name="Login" Text="Login" Clicked="Login_Clicked" BackgroundColor="#0a8281" TextColor="White" HeightRequest="40" WidthRequest="300"/>
+
+        <!-- campo para serem retirados depois -->
+        <Border StrokeShape="RoundRectangle 90,90,90,90" BackgroundColor="Transparent"   HeightRequest="45" WidthRequest="302" >
+            <Entry Placeholder="Nova Senha" x:Name="NovaSenhaLogin" PlaceholderColor="White" BackgroundColor="Transparent" TextColor="White" IsPassword="True"  HeightRequest="40" WidthRequest="300"/>
+        </Border>
+
+        <Button x:Name="criar" Text="criarLogin" Clicked="criar_Clicked" BackgroundColor="#0a8281" TextColor="White" HeightRequest="40" WidthRequest="300" />
+        <Button x:Name="Update" Text="Update" Clicked="Update_Clicked" BackgroundColor="#0a8281" TextColor="White" HeightRequest="40" WidthRequest="300"/>
     </StackLayout>
 </ContentPage>
+
+

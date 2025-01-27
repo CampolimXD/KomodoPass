@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.ComponentModel.DataAnnotations;
 
 namespace KomodoPass
 {
@@ -11,6 +12,7 @@ namespace KomodoPass
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
                 {
+                    fonts.AddFont("Audiowide-Regular.ttf", "Audiowide");
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });

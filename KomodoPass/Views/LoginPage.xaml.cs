@@ -3,16 +3,28 @@ namespace KomodoPass.Views;
 public partial class LoginPage : ContentPage
 {
     private readonly LocalDB _dbService;
-    
+    private bool _isPasswordVisible = false;
     public LoginPage(LocalDB dbService)
 	{
 		InitializeComponent();
         _dbService = dbService;
-    }   
-    // criar user apenas se nao tiver um usuario ja pre cadastrado 
+    }
+    // Mostrar senha digitada e trocar imagem
+    private void ShowPassword_Clicked(object sender, EventArgs e)
+    {
+        SenhaLogin.IsPassword = !SenhaLogin.IsPassword;       
+        if (SenhaLogin.IsPassword == false) {
+            ShowPassword.Source = "eyeoffoutline.png";
+        }
+        else {
+            ShowPassword.Source = "eyeoutline.png";
+        }
+    }
+
+    // Criar user apenas se nao tiver um usuario ja pre cadastrado 
     private async void criar_Clicked(object sender, EventArgs e)
     {
-        // verifica se ja existe e se existir cancela o login 
+        // Verifica se ja existe e se existir cancela o login 
         var onlyUser = await _dbService.GetFirstUser();
         if (onlyUser != null)
         {
@@ -21,7 +33,7 @@ public partial class LoginPage : ContentPage
             SenhaLogin.Text = string.Empty;
             return;
         }
-        //criar user
+        // Criar user
         var password = SenhaLogin.Text;
         var salt = _dbService.CreateSalt();
         string hash = _dbService.HashPassword(password, salt);
@@ -35,7 +47,7 @@ public partial class LoginPage : ContentPage
             UpdatedAt = DateTime.Now,
         });
         await DisplayAlert("Sucesso", "Login criado com sucesso!", "OK");
-        // reseta o texto 
+        // Reseta o texto 
         UserLogin.Text = string.Empty;
         SenhaLogin.Text = string.Empty;
     }
@@ -53,6 +65,7 @@ public partial class LoginPage : ContentPage
         {
             await DisplayAlert("Sucesso", "Login realizado com sucesso!", "OK");
             Application.Current.MainPage = new NavigationPage(new AppShell());
+            
         }
         else
         {
@@ -93,5 +106,5 @@ public partial class LoginPage : ContentPage
         {
             await DisplayAlert("Erro", "Usuário e/ou senha incorretos. Não foi possível atualizar.", "OK");
         }
-    }
+    }    
 }
