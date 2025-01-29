@@ -7,7 +7,7 @@ namespace KomodoPass
         
         private readonly LocalDB _dbService;
         private int _editPasswordId;
-
+     
         public MainPage(LocalDB dbService)
         {
             InitializeComponent();
@@ -42,7 +42,6 @@ namespace KomodoPass
                     break;
             }
         }
-
         private async void Salvar_Clicked(object sender, EventArgs e)
         {
             if (_editPasswordId == 0)
@@ -93,7 +92,6 @@ namespace KomodoPass
             // dar um refresh na lista
             listView.ItemsSource = await _dbService.GetKomodoPasswords();
         }
-
         private async void Busca_TextChanged(object sender, TextChangedEventArgs e)
         {
             string query = e.NewTextValue;
@@ -108,6 +106,72 @@ namespace KomodoPass
                 var results = await _dbService.SearchPasswords(query);
                 listView.ItemsSource = results;
             }
-        }                   
+        }
+        private async void ShowPass_Clicked(object sender, EventArgs e)
+        {
+            if (sender is ImageButton button && button.CommandParameter is KomodoPassword passwordItem)
+            {
+                try
+                {
+                    if (button.Parent is Grid grid)
+                    {
+                        var showItLabel = grid.Children.OfType<Label>()
+                            .FirstOrDefault(l => l.AutomationId == "ShowIt");
+
+                        if (showItLabel != null)
+                        {
+                            if (showItLabel.Text == "••••••••")
+                            {
+                                var aesKey = await _dbService.GetOrCreateKeyAsync();
+                                var decrypted = _dbService.Decrypt(Encoding.UTF8.GetString(passwordItem.Password),aesKey);
+                                showItLabel.Text = decrypted;
+                                button.Source = "eyeoffoutline.png";
+                            }
+                            else
+                            {
+                                showItLabel.Text = "••••••••";
+                                button.Source = "eyeoutline.png";
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert("Erro", $"Falha na descriptografia: {ex.Message}", "OK");
+                }
+            }
+        }
+        private async Task ClearClipBoard()
+        {
+            await Task.Delay(10000);
+            await Clipboard.Default.SetTextAsync(null);
+        }
+        private async void CopyPass_Clicked(object sender, EventArgs e)
+        {
+            if (sender is ImageButton button && button.CommandParameter is KomodoPassword passwordItem)
+            {
+                try
+                {
+                    if (button.Parent is Grid grid)
+                    {
+                        var showItLabel = grid.Children.OfType<Label>()
+                            .FirstOrDefault(l => l.AutomationId == "ShowIt");
+
+                        if (showItLabel != null)
+                        {                            
+                            var aesKey = await _dbService.GetOrCreateKeyAsync();
+                            var decrypted = _dbService.Decrypt(Encoding.UTF8.GetString(passwordItem.Password),aesKey);
+                            string textToCopy = decrypted.ToString();
+                            Clipboard.SetTextAsync(textToCopy);
+                            ClearClipBoard();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert("Erro", $"Falha na descriptografia: {ex.Message}", "OK");
+                }
+            }
+        }
     }
 }

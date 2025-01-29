@@ -14,7 +14,7 @@ public partial class LoginPage : ContentPage
     {
         SenhaLogin.IsPassword = !SenhaLogin.IsPassword;       
         if (SenhaLogin.IsPassword == false) {
-            ShowPassword.Source = "eyeoffoutline.png";
+            ShowPassword.Source = "eyeoffoutiline.png";
         }
         else {
             ShowPassword.Source = "eyeoutline.png";

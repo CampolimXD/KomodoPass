@@ -4,10 +4,9 @@
              x:Class="KomodoPass.MainPage">
 
     <FlexLayout Direction="Column">
-        
         <SearchBar x:Name="Busca" Placeholder="Busca" TextChanged="Busca_TextChanged">
 </SearchBar>
-        <ListView x:Name="listView" FlexLayout.Grow="1" ItemTapped="ListView_ItemTapped" VerticalScrollBarVisibility="Always" MinimumHeightRequest="200" MaximumHeightRequest="500">
+        <ListView x:Name="listView" FlexLayout.Grow="1" ItemTapped="ListView_ItemTapped" VerticalScrollBarVisibility="Always" MinimumHeightRequest="200" MaximumHeightRequest="240" BackgroundColor="#0a8281">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -34,25 +33,10 @@
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0" Text="{Binding Email}" />
                                 <Label Grid.Column="1" Text="{Binding Username}" />
-                                <Label Grid.Column="2" Text="{Binding Password}" FontAttributes="Bold" />
-                                <Button 
-                                    Grid.Column="3"
-                                    WidthRequest="5" 
-                                    HeightRequest="5" 
-                                    CornerRadius="5" 
-                                    BackgroundColor="RoyalBlue" 
-                                    Text="🔌" 
-                                    
-                                    TextColor="White" />
-                                <Button 
-                                     Grid.Column="4"
-                                     WidthRequest="5" 
-                                     HeightRequest="5" 
-                                     CornerRadius="5" 
-                                     BackgroundColor="RoyalBlue" 
-                                     Text="📃" 
-                                     
-                                     TextColor="White" />
+                                <Label Grid.Column="2" x:Name="ShowIt" BindingContext="{Binding Password}"  AutomationId="ShowIt" Text="••••••••" FontAttributes="Bold" />
+                                <ImageButton Source="eyeoutline.png" x:Name="ShowPass" CommandParameter="{Binding .}" BackgroundColor="Transparent" Grid.Column="3" Aspect="Center" Clicked="ShowPass_Clicked"/>
+                                <ImageButton Source="copy.png" x:Name="CopyPass" CommandParameter="{Binding .}" BackgroundColor="Transparent" Grid.Column="4" Aspect="Center" Clicked="CopyPass_Clicked"/>
+                                
                             </Grid>
                         </VerticalStackLayout>
                     </ViewCell>

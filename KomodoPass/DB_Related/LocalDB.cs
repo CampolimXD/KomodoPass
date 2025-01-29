@@ -99,7 +99,7 @@ namespace KomodoPass
             using var srDecrypt = new StreamReader(csDecrypt);
 
             return srDecrypt.ReadToEnd();
-        }
+        }      
         public async Task<List<KomodoPassword>> GetKomodoPasswords()
         {
            return await _conn.Table<KomodoPassword>().ToListAsync();
