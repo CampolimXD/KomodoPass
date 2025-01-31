@@ -1,0 +1,34 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KomodoPass.ConfigPage"
+             Title="ConfigPage">
+    <ScrollView BackgroundColor="#282d34">
+        <StackLayout Padding="20" Spacing="25">
+            <Border BackgroundColor="#1b1f27" StrokeShape="RoundRectangle 10,10,10,10" StrokeThickness="0" Padding="15">
+                <StackLayout Spacing="15">
+                    <Label Text="Atualize suas Credenciais" FontAttributes="Bold" TextColor="White" FontSize="16"/>
+
+                    <Border Stroke="Transparent" StrokeShape="RoundRectangle 90,90,90,90" BackgroundColor="#1b1f27" >
+                        <Entry Placeholder="Username" PlaceholderColor="#8a8f97" TextColor="White" BackgroundColor="Transparent" x:Name="UserConfig" />
+                    </Border>
+                        
+                    <Border Stroke="Transparent" StrokeShape="RoundRectangle 90,90,90,90" BackgroundColor="#1b1f27" >
+                        <Entry Placeholder="Senha antiga" IsPassword="True" PlaceholderColor="#8a8f97" TextColor="White"  BackgroundColor="Transparent" x:Name="OldSenha"/>
+                    </Border>
+                    
+                    <Border Stroke="Transparent" StrokeShape="RoundRectangle 90,90,90,90" BackgroundColor="#1b1f27" >
+                        <Entry Placeholder="Novo user" PlaceholderColor="#8a8f97" TextColor="White" BackgroundColor="Transparent" x:Name="NovoUserConfig"/>
+                    </Border>
+                    
+                    <Border Stroke="Transparent" StrokeShape="RoundRectangle 90,90,90,90" BackgroundColor="#1b1f27" >
+                        <Entry Placeholder="Nova Senha" IsPassword="True" PlaceholderColor="#8a8f97" TextColor="White" BackgroundColor="Transparent" x:Name="NovaSenhaConfig"/>
+                    </Border>
+                    
+                    <Button Text="Atualizar" BackgroundColor="#0a8281" TextColor="White" CornerRadius="10" HeightRequest="40" x:Name="Update"/>
+                </StackLayout>
+            </Border>
+
+            
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

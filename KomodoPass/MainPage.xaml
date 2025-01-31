@@ -2,55 +2,72 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KomodoPass.MainPage">
-
-    <FlexLayout Direction="Column">
-        <SearchBar x:Name="Busca" Placeholder="Busca" TextChanged="Busca_TextChanged">
-</SearchBar>
-        <ListView x:Name="listView" FlexLayout.Grow="1" ItemTapped="ListView_ItemTapped" VerticalScrollBarVisibility="Always" MinimumHeightRequest="200" MaximumHeightRequest="240" BackgroundColor="#0a8281">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <VerticalStackLayout Padding="5">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width=".3*" />
-                                    <ColumnDefinition Width=".2*" />
-                                    <ColumnDefinition Width=".2*" />
-                                    <ColumnDefinition Width=".2*" />
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0" Text="{Binding Title}" FontSize="17" FontAttributes="Bold" />
-                                <Label Grid.Column="1" Text="User" FontSize="17" FontAttributes="Bold" />
-                                <Label Grid.Column="2" Text="Senha" FontSize="17" FontAttributes="Bold" />
-                            </Grid>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width=".3*" />
-                                    <ColumnDefinition Width=".2*" />
-                                    <ColumnDefinition Width=".2*" />
-                                    <ColumnDefinition Width=".1*" />
-                                    <ColumnDefinition Width=".1*" />
+    <ScrollView>
+        <FlexLayout Direction="Column">
+            <SearchBar x:Name="Busca" Placeholder="Busca" TextChanged="Busca_TextChanged">
+             </SearchBar>
+            <ListView x:Name="listView" FlexLayout.Grow="1" ItemTapped="ListView_ItemTapped" VerticalScrollBarVisibility="Always" MinimumHeightRequest="200" MaximumHeightRequest="240" BackgroundColor="#0a8281">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <VerticalStackLayout Padding="5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width=".3*" />
+                                        <ColumnDefinition Width=".2*" />
+                                        <ColumnDefinition Width=".2*" />
+                                        <ColumnDefinition Width=".2*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Text="{Binding Title}" FontSize="17" FontAttributes="Bold" />
+                                    <Label Grid.Column="1" Text="User" FontSize="17" FontAttributes="Bold" />
+                                    <Label Grid.Column="2" Text="Senha" FontSize="17" FontAttributes="Bold" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width=".3*" />
+                                        <ColumnDefinition Width=".2*" />
+                                        <ColumnDefinition Width=".2*" />
+                                        <ColumnDefinition Width=".1*" />
+                                        <ColumnDefinition Width=".1*" />
                                     
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0" Text="{Binding Email}" />
-                                <Label Grid.Column="1" Text="{Binding Username}" />
-                                <Label Grid.Column="2" x:Name="ShowIt" BindingContext="{Binding Password}"  AutomationId="ShowIt" Text="••••••••" FontAttributes="Bold" />
-                                <ImageButton Source="eyeoutline.png" x:Name="ShowPass" CommandParameter="{Binding .}" BackgroundColor="Transparent" Grid.Column="3" Aspect="Center" Clicked="ShowPass_Clicked"/>
-                                <ImageButton Source="copy.png" x:Name="CopyPass" CommandParameter="{Binding .}" BackgroundColor="Transparent" Grid.Column="4" Aspect="Center" Clicked="CopyPass_Clicked"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Text="{Binding Email}" />
+                                    <Label Grid.Column="1" Text="{Binding Username}" />
+                                    <Label Grid.Column="2" x:Name="ShowIt" BindingContext="{Binding Password}"  AutomationId="ShowIt" Text="••••••••" FontAttributes="Bold" />
+                                    <ImageButton Source="eyeoutline.png" x:Name="ShowPass" CommandParameter="{Binding .}" BackgroundColor="Transparent" Grid.Column="3" Aspect="Center" Clicked="ShowPass_Clicked"/>
+                                    <ImageButton Source="copy.png" x:Name="CopyPass" CommandParameter="{Binding .}" BackgroundColor="Transparent" Grid.Column="4" Aspect="Center" Clicked="CopyPass_Clicked"/>
                                 
-                            </Grid>
-                        </VerticalStackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <VerticalStackLayout Padding="10" FlexLayout.Basis="400" BackgroundColor="Black">
-            <Entry x:Name="NameEntryField" Placeholder="title" />
-            <Entry x:Name="EmailEntryField" Placeholder="email" />
-            <Entry x:Name="UserEntryField" Placeholder="user" />
-            <Entry x:Name="SenhaEntryField" Placeholder="Senha" IsPassword="False" />
-            <Entry x:Name="NotasEntryField" Placeholder="Notas" />
-            <Entry x:Name="WebsiteEntryField" Placeholder="website" />
-            <Button x:Name="Salvar" Text="Salvar" Clicked="Salvar_Clicked" />
-        </VerticalStackLayout>
-    </FlexLayout>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <VerticalStackLayout Padding="20" Spacing="15" BackgroundColor="#282d34">
+                <Border StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="#1b1f27" Stroke="Transparent" Padding="15">
+                    <VerticalStackLayout Spacing="15">
+                        <Border StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="#1b1f27" Stroke="Transparent">
+                            <Entry x:Name="NameEntryField" Placeholder="title" PlaceholderColor="#8a8f97" TextColor="White" BackgroundColor="Transparent"/>
+                        </Border>
+                        <Border StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="#1b1f27" Stroke="Transparent">
+                            <Entry x:Name="EmailEntryField" Placeholder="email" PlaceholderColor="#8a8f97" TextColor="White" BackgroundColor="Transparent"/>
+                        </Border>
+                        <Border StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="#1b1f27" Stroke="Transparent">
+                            <Entry x:Name="UserEntryField" Placeholder="user" PlaceholderColor="#8a8f97" TextColor="White" BackgroundColor="Transparent"/>
+                        </Border>
+                        <Border StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="#1b1f27" Stroke="Transparent">
+                            <Entry x:Name="SenhaEntryField" Placeholder="Senha" PlaceholderColor="#8a8f97" TextColor="White" IsPassword="False" BackgroundColor="Transparent"/>
+                        </Border>
+                        <Border StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="#1b1f27" Stroke="Transparent">
+                            <Entry x:Name="NotasEntryField" Placeholder="Notas" PlaceholderColor="#8a8f97" TextColor="White" BackgroundColor="Transparent"/>
+                        </Border>
+                        <Border StrokeShape="RoundRectangle 10,10,10,10" BackgroundColor="#1b1f27" Stroke="Transparent">
+                            <Entry x:Name="WebsiteEntryField" Placeholder="website" PlaceholderColor="#8a8f97" TextColor="White" BackgroundColor="Transparent"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+                <Button x:Name="Salvar" Text="Salvar" BackgroundColor="#0a8281" TextColor="White" CornerRadius="10" HeightRequest="40" Clicked="Salvar_Clicked"/>
+            </VerticalStackLayout>
+        </FlexLayout>
+    </ScrollView>
 </ContentPage>
