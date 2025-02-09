@@ -27,9 +27,9 @@ namespace KomodoPass
             //APENAS MANTER EM AMBIENTES DE TESTE !!!
             //caso queira recriar o BD execute o codigo acima 
 
-            _conn = new SQLiteAsyncConnection(Path.Combine(FileSystem.AppDataDirectory, KomodoPassDB));
-            _conn.CreateTableAsync<KomodoPassword>();
-            _conn.CreateTableAsync<MasterPassword>();      
+           _conn = new SQLiteAsyncConnection(Path.Combine(FileSystem.AppDataDirectory, KomodoPassDB));
+           _conn.CreateTableAsync<KomodoPassword>();
+           _conn.CreateTableAsync<MasterPassword>();      
         }
         // SALT
         public byte[] CreateSalt()

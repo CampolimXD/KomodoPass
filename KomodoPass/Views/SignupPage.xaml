@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KomodoPass.Views.SignupPage"
+             Title="SignupPage">
+    
+    <StackLayout BackgroundColor="#282d34" Padding="20" Spacing="20">
+        <Label Text="Komodo Pass" FontSize="96" TextColor="White" HorizontalOptions="Center" FontFamily="Audiowide" />
+        <!-- aumentar o tamhanho quando tirar os campos adicionais -->
+        <Image Source="dotnet_bot.png" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" />
+
+        <Border Stroke="Transparent" StrokeShape="RoundRectangle 90,90,90,90" BackgroundColor="#1b1f27"   HeightRequest="45" WidthRequest="302" >
+            <Entry Placeholder="Username" x:Name="CriarUser" PlaceholderColor="White" BackgroundColor="Transparent" TextColor="White" HeightRequest="40" WidthRequest="300"/>
+        </Border>
+
+        <Border Stroke="Transparent" StrokeShape="RoundRectangle 90,90,90,90" BackgroundColor="#1b1f27" HeightRequest="45" WidthRequest="302">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Entry x:Name="CriarSenha" IsPassword="True" Placeholder="Password" PlaceholderColor="White" BackgroundColor="Transparent" TextColor="White" HeightRequest="40" Grid.Column="0" />
+                <ImageButton Source="eyeoutline.png" x:Name="ShowPassword" Clicked="ShowPassword_Clicked" BackgroundColor="Transparent" Grid.Column="1" Aspect="AspectFill" />
+            </Grid>
+        </Border>
+    
+        <Button x:Name="CriarUserSenha" Text="Sign up" Clicked="CriarUserSenha_Clicked" BackgroundColor="#0a8281" TextColor="White" HeightRequest="40" WidthRequest="300" />
+        
+    </StackLayout>
+</ContentPage>

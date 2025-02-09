@@ -3,7 +3,7 @@ namespace KomodoPass.Views;
 public partial class LoginPage : ContentPage
 {
     private readonly LocalDB _dbService;
-    private bool _isPasswordVisible = false;
+    
     public LoginPage(LocalDB dbService)
 	{
 		InitializeComponent();
